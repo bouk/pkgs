@@ -9,7 +9,7 @@ You can include the repository in your flake like this:
 ```nix
 {
   ..
-  inputs.boukpkgs.url = "github:bouke/boukpkgs";
+  inputs.boukpkgs.url = "github:bouk/boukpkgs";
   inputs.boukpkgs.inputs.nixpkgs.follows = "nixpkgs";
 }
 ```
