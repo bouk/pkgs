@@ -14,7 +14,7 @@ You can include the repository in your flake like this:
 }
 ```
 
-And then use boukpkgs.overlays.default as an overlay.
+And then use `boukpkgs.overlays.default` as an overlay.
 
 Or run and install the packages directly:
 
