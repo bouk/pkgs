@@ -47,7 +47,7 @@ while [ "$#" -gt 0 ]; do
         verboseScript="true"
         extraBuildFlags+=("$i")
         ;;
-      --option)
+      --option|--override-input)
         j="$1"; shift 1
         k="$1"; shift 1
         extraBuildFlags+=("$i" "$j" "$k")
@@ -107,7 +107,7 @@ build() {
     if [ -a "$drv" ]; then
         logVerbose "Running nix with these NIX_SSHOPTS: $SSHOPTS"
         NIX_SSHOPTS=$SSHOPTS runCmd nix "${flakeFlags[@]}" copy "${copyFlags[@]}" --derivation --to "ssh://$targetHost" "$drv"
-        echo "$(ssh $SSHOPTS "$targetHost" nix-store -r "$drv" "${buildArgs[@]}")"
+        ssh $SSHOPTS "$targetHost" nix-store -r "$drv" "${buildArgs[@]}"
     else
         log "nix eval failed"
         exit 1

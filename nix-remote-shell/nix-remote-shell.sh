@@ -47,7 +47,7 @@ while [ "$#" -gt 0 ]; do
         verboseScript="true"
         extraBuildFlags+=("$i")
         ;;
-      --option)
+      --option|--override-input)
         j="$1"; shift 1
         k="$1"; shift 1
         extraBuildFlags+=("$i" "$j" "$k")
