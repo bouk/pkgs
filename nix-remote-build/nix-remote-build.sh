@@ -106,8 +106,9 @@ build() {
     drv="$(runCmd nix "${flakeFlags[@]}" eval --raw "${attr}.drvPath" "${evalArgs[@]}" "${extraBuildFlags[@]}")"
     if [ -a "$drv" ]; then
         logVerbose "Running nix with these NIX_SSHOPTS: $SSHOPTS"
-        NIX_SSHOPTS=$SSHOPTS runCmd nix "${flakeFlags[@]}" copy "${copyFlags[@]}" --derivation --to "ssh://$targetHost" "$drv"
-        ssh $SSHOPTS "$targetHost" nix-store -r "$drv" "${buildArgs[@]}"
+        store="ssh-ng://$targetHost"
+        NIX_SSHOPTS=$SSHOPTS runCmd nix "${flakeFlags[@]}" copy "${copyFlags[@]}" --derivation --to "$store" "$drv"
+        NIX_SSHOPTS=$SSHOPTS NIX_REMOTE="$store" runCmd nix "${flakeFlags[@]}" build "$drv"
     else
         log "nix eval failed"
         exit 1
