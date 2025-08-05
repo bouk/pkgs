@@ -108,7 +108,7 @@ build() {
         logVerbose "Running nix with these NIX_SSHOPTS: $SSHOPTS"
         store="ssh-ng://$targetHost"
         NIX_SSHOPTS=$SSHOPTS runCmd nix "${flakeFlags[@]}" copy "${copyFlags[@]}" --derivation --to "$store" "$drv"
-        NIX_SSHOPTS=$SSHOPTS NIX_REMOTE="$store" runCmd nix "${flakeFlags[@]}" build "$drv"
+        NIX_SSHOPTS=$SSHOPTS NIX_REMOTE="$store" runCmd nix "${flakeFlags[@]}" build --no-link --print-out-paths "$drv^*"
     else
         log "nix eval failed"
         exit 1
